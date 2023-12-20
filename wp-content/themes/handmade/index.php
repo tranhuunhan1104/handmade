@@ -1,4 +1,6 @@
 <?php get_header();?>
+
+
     <?php include 'template-parts/banner.php'?>
 
   <main id="main">

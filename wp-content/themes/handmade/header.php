@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Yummy Bootstrap Template - Index</title>
+  <title><?php echo $site_title = get_bloginfo('name'); ?></title>
 
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -21,23 +21,44 @@
   <header id="header" class="header fixed-top d-flex align-items-center">
     <div class="container d-flex align-items-center justify-content-between">
 
-      <a href="index.html" class="logo d-flex align-items-center me-auto me-lg-0">
+      <a class="logo d-flex align-items-center me-auto me-lg-0">
         <!-- Uncomment the line below if you also wish to use an image logo -->
-        <!-- <img src="<?php echo get_template_directory_uri(); ?>/assets/img/logo.png" alt=""> -->
-        <h1>Yummy<span>.</span></h1>
+        <h1><?php echo $site_title = get_bloginfo('name'); ?><span>.</span></h1>
       </a>
+<?php
 
-      <nav id="navbar" class="navbar">
-        <ul>
-          <li><a href="#hero">Home</a></li>
-          <li><a href="#about">About</a></li>
-          <li><a href="#menu">Menu</a></li>
-          <li><a href="#gallery">Gallery</a></li>
-          <li><a href="#contact">Contact</a></li>
-        </ul>
-      </nav><!-- .navbar -->
+$menu_name = 'primary';
+$menu = wp_get_nav_menu_object($menu_name);
 
-      <a class="btn-book-a-table" href="#book-a-table">Book a Table</a>
+$menu_items = wp_get_nav_menu_items($menu->term_id);
+
+if ($menu_items) {
+    echo '   <nav id="navbar" class="navbar">
+        <ul>';
+
+    foreach ($menu_items as $menu_item) {
+        echo "<li><a href='" . $menu_item->url . "'>" . $menu_item->title . "</a></li>";
+    }
+    echo ' </ul>
+        </nav>';
+}
+
+?>
+<?php
+
+$menu_name = 'menu_book';
+$menu = wp_get_nav_menu_object($menu_name);
+
+$menu_items = wp_get_nav_menu_items($menu->term_id);
+
+if ($menu_items) {
+
+    foreach ($menu_items as $menu_item) {
+        echo "<a class='btn-book-a-table' href='" . $menu_item->url . "'> " . $menu_item->title . "</a>";
+    }
+}
+
+?>
       <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
       <i class="mobile-nav-toggle mobile-nav-hide d-none bi bi-x"></i>
 
